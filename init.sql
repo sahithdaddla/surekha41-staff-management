@@ -11,6 +11,6 @@ CREATE TABLE employees (
     UNIQUE(emp_id)
 );
 
--- Create indexes for better query performance
+
 CREATE INDEX idx_emp_id ON employees(emp_id);
 CREATE INDEX idx_email ON employees(email);
