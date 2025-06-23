@@ -1,0 +1,59 @@
+version: "3.9"
+
+services:
+  postgres:
+    image: postgres:16
+    container_name: staff41-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: admin123
+      POSTGRES_DB: staff_db
+    ports:
+      - "5459:5432"
+    volumes:
+      - pgdata_staff41:/var/lib/postgresql/data
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    networks:
+      - staff-net
+
+  backend:
+    build:
+      context: ./Backend        # uses Backend/Dockerfile below
+      dockerfile: Dockerfile
+    container_name: staff41-backend
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    environment:
+      # these match server.js dotenv keys
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_NAME: staff_db
+      DB_USER: postgres
+      DB_PASSWORD: admin123
+      PORT: 3028
+    ports:
+      - "3028:3028"
+    networks:
+      - staff-net
+
+  staff:
+    build:
+      context: ./Staff          # uses Staff/Dockerfile below
+      dockerfile: Dockerfile
+    container_name: staff41-ui
+    restart: unless-stopped
+    depends_on:
+      - backend
+    ports:
+      - "8166:80"
+    networks:
+      - staff-net
+
+networks:
+  staff-net:
+
+volumes:
+  pgdata_staff41:
+
