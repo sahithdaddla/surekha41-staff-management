@@ -552,7 +552,7 @@
 
         async function fetchEmployees() {
             try {
-                const response = await fetch('http://13.48.195.115:3028/api/employees');
+                const response = await fetch('http://3.85.61.23:3605/api/employees');
                 if (!response.ok) throw new Error('Failed to fetch employees');
                 employees = await response.json();
                 filteredEmployees = [...employees]; // Deep copy to avoid mutation
@@ -577,7 +577,7 @@
 
         async function addEmployee(employee) {
             try {
-                const response = await fetch('http://13.48.195.115:3028/api/employees', {
+                const response = await fetch('http://3.85.61.23:3605/api/employees', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(employee)
@@ -596,7 +596,7 @@
 
         async function updateEmployee(empId, employee) {
             try {
-                const response = await fetch(`http://13.48.195.115:3028/api/employees/${empId}`, {
+                const response = await fetch(`http://3.85.61.23:3605/api/employees/${empId}`, {
                     method: 'PUT',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify(employee)
@@ -616,7 +616,7 @@
         async function deleteEmployee(empId) {
             if (!confirm('Are you sure you want to delete this employee?')) return;
             try {
-                const response = await fetch(`http://13.48.195.115:3028/api/employees/${empId}`, {
+                const response = await fetch(`http://3.85.61.23:3605/api/employees/${empId}`, {
                     method: 'DELETE'
                 });
                 if (!response.ok) {
@@ -732,7 +732,7 @@
 
         async function editEmployee(empId) {
             try {
-                const response = await fetch(`http://13.48.195.115:3028/api/employees/${empId}`);
+                const response = await fetch(`http://3.85.61.23:3605/api/employees/${empId}`);
                 if (!response.ok) throw new Error('Failed to fetch employee');
                 const employee = await response.json();
                 editingEmpId = empId;
@@ -829,7 +829,7 @@
                     return;
                 }
                 try {
-                    const response = await fetch(`http://13.48.195.115:3028/api/employees/${value}`);
+                    const response = await fetch(`http://3.85.61.23:3605/api/employees/${value}`);
                     if (response.ok) {
                         showError('empId', 'Employee ID already exists. Please use a different ID.');
                     } else {
